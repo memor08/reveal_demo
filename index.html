@@ -65,10 +65,17 @@
 			
 			// Refresh sas every 30 minutes
 			function fn30min() {
-				document.getElementsByTagName("sas-report-page").forEach(report => report.getReportHandle().then((reportHandle) => reportHandle.reloadReport()))		
+				document.getElementsByTagName("sas-report-page").forEach(report => report.getReportHandle().then((reportHandle) => reportHandle.refreshData()))		
 			}
 			fn30min();
+			
+			function fn12h() {
+				document.getElementsByTagName("sas-report-page").forEach(report => report.getReportHandle().then((reportHandle) => reportHandle.reloadReport()))		
+			}
+			fn12h();
+			
 			setInterval(fn30min, 30*60*1000);
+			setInterval(fn12h, 12*60*60*1000);
 		</script>
 	</body>
 </html>
