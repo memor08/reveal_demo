@@ -4,29 +4,41 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>wallboard</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
+		<!--<link rel="stylesheet" href="dist/reset.css">-->
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<!--<link rel="stylesheet" href="dist/theme/black.css">-->
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<!--<link rel="stylesheet" href="plugin/highlight/monokai.css">-->
+		<!-- Theme used for sas -->
+		<link rel="stylesheet" href="css/sas.css">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section data-background-iframe="https://app.powerbi.com/reportEmbed?reportId=62f06a9c-3112-4dd6-afc1-9b07e718b2b5&autoAuth=true&ctid=421c9c18-32c7-4250-84e0-c1626f963b1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLW5vcnRoLWV1cm9wZS1rLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D"
-          data-background-interactive>
-				  <h2>Iframe</h2>
+				<section data-fullscreen>
+					<div class="stretch">
+						<sas-report-page 
+						 pageName="vi6"
+						 authenticationType="credentials"
+						 url="https://sasva.regionh.top.local"
+						 reportUri="/reports/reports/96f31cc0-fd94-4a8d-9931-c7e4eb7613e5"
+						></sas-report-page>
+					</div>
 				</section>
 				<section>
-					<sas-report-object objectName="ve8449"
-					 authenticationType="credentials"
-					 url="https://sasva.regionh.top.local"
-					 reportUri="/reports/reports/814fe9b0-2018-4820-aafb-f85e3e341419"
-					></sas-report-object>
+					<div>
+						<a 	class="twitter-timeline" 
+							data-width="100vw"
+							data-height="100vh"
+							href="https://twitter.com/akutberedskabet?ref_src=twsrc%5Etfw">Tweets by akutberedskabet</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					</div>
 				</section>
+				<section data-background-iframe="https://view.monday.com/2902312186-a334a4d9bf5a8309a1f2ba9e6ea87e40?r=use1" data-background-interactive>
+				</section>
+
 			</div>
 		</div>
 
@@ -34,6 +46,9 @@
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<script async src="https://unpkg.com/@sassoftware/va-report-components@latest/dist/umd/va-report-components.js"></script>
+		<script src="plugin/fullscreen/plugin.js"></script>
+		<script src="plugin/embed-tweet/plugin.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
@@ -42,9 +57,18 @@
 				hash: true,
 
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealFullscreen, RevealEmbedTweet ]
 			});
+			
+			// Start auto-sliding every 30s
+			Reveal.configure({ autoSlide: 30000, loop: true, autoPlayMedia: true  });
+			
+			// Refresh sas every 30 minutes
+			function fn30min() {
+				document.getElementsByTagName("sas-report-page").forEach(report => report.getReportHandle().then((reportHandle) => reportHandle.reloadReport()))		
+			}
+			fn30min();
+			setInterval(fn30min, 30*60*1000);
 		</script>
-		<script async src="https://unpkg.com/@sassoftware/va-report-components@1.5.0/dist/umd/va-report-components.js"></script>
 	</body>
 </html>
